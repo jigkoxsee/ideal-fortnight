@@ -1,0 +1,27 @@
+{
+  "name": "zcoin-wallet",
+  "version": "0.0.1",
+  "author": "supakorn@jigko.net",
+  "scripts": {
+    "watch": "webpack -d --watch",
+    "js": "webpack -p",
+    "cljs": "lein figwheel",
+    "rcljs": "rlwrap lein figwheel",
+    "start": "yarn js&&yarn cljs",
+    "clean": "lein do clean",
+    "build": "lein do clean, cljsbuild once min",
+    "deploy": "firebase deploy"
+  },
+  "dependencies": {
+    "@cljs-oss/module-deps": "^1.1.1",
+    "bip39": "^2.5.0",
+    "bitcoinjs-lib": "^3.3.2",
+    "bitcore-lib-zcoin": "git+https://git@github.com/Technoprenerd/bitcore-lib-zcoin",
+    "react": "^16.3.1",
+    "react-dom": "^16.3.1",
+    "webpack": "^4.5.0"
+  },
+  "devDependencies": {
+    "webpack-cli": "^2.0.13"
+  }
+}
