@@ -3,7 +3,8 @@
               [reagent.core :as reagent :refer [atom]]
               [zcoin.key :as k]
               [zcoin.transaction :as t]
-              [zcoin.mnemonic :as m]))
+              [zcoin.mnemonic :as m]
+              [zcoin-wallet.views.sign-tx :as sign-tx]))
 
 (enable-console-print!)
 
@@ -61,7 +62,9 @@
     [:div.btn.btn-success "wow"]
     [:pre>p "ww"]];(m/generate)]]])
    [:hr]
-   [mnemonic-box]])
+   [mnemonic-box]
+   [:hr]
+   [sign-tx/page]])
 
 (defn on-js-reload [])
   ;; optionally touch your app-state to force rerendering depending on
