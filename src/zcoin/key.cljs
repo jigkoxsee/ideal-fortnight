@@ -3,12 +3,16 @@
     [zcoin.mnemonic :as m]
     [oops.core :refer [oget oset! ocall oapply ocall! oapply!]]))
 
+
+(def zcoin-lib (atom ((oget js/window "require") "bitcore-lib")))
+
+
 ; Constant derive path for zcoin
 (def derived-path "m/44'/136'/")
-
 (def default-account 0)
 
-(def zcoin-lib (aget js/window "deps" "zcoin-lib"))
+;(def default-account 1)
+
 
 (defn get-derive-path [account index]
   ;(let [path (str derived-path account "/" index)])
@@ -62,17 +66,27 @@
 
 
 (defn from-seed [seed]
-  (let [f (oget zcoin-lib :HDPrivateKey :fromSeed)]
-    (->HDPrivateKey (f seed))))
+  (if-not (nil? @zcoin-lib)
+    (let [f (oget @zcoin-lib :HDPrivateKey :fromSeed)]
+      (->HDPrivateKey (f seed)))))
 
 
 (comment
+
+  (def lib ((oget js/window "require") "bitcore-lib"))
+
+
+  ((oget lib "PrivateKey"))
+
+
   (get-derive-path "0" "1")
   (test-get-derive-path)
 
   (let [seed (m/to-seed (m/generate))
         hdpv (from-seed seed)
         pv (derive-key hdpv 0)]
+    (prn :keys (js/Object.keys (:pv pv)))
+    (prn :pubkey (js/Object.keys (oget (:pv pv) "_pubkey")))
     (prn :wif (to-wif pv))
     (prn :private (to-private-key pv))
     (prn :public (to-public-key pv))

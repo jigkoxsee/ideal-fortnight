@@ -42,6 +42,7 @@
                            :optimizations :none
                            :foreign-libs [{:file "resources/public/js/bundle.js"
                                            :provides ["cljsjs.react" "cljsjs.react.dom" "webpack.bundle"]}]
+                           :closure-defines {process.env/NODE_ENV "development"}
                            ;; To console.log CLJS data-structures make sure you enable devtools in Chrome
                            ;; https://github.com/binaryage/cljs-devtools
                            :preloads [devtools.preload]}}
@@ -52,6 +53,7 @@
                 :source-paths ["src"]
                 :compiler {:output-to "resources/public/js/compiled/zcoin_wallet.js"
                            :main zcoin-wallet.core
+                           :closure-defines {process.env/NODE_ENV "production"}
                            :optimizations :advanced
                            :pretty-print false}}]}
 

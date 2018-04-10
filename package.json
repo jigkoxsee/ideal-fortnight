@@ -15,10 +15,9 @@
   "dependencies": {
     "@cljs-oss/module-deps": "^1.1.1",
     "bip39": "^2.5.0",
-    "bitcoinjs-lib": "^3.3.2",
     "bitcore-lib-zcoin": "git+https://git@github.com/Technoprenerd/bitcore-lib-zcoin",
-    "react": "^16.3.1",
-    "react-dom": "^16.3.1",
+    "react": "^15.6.1",
+    "react-dom": "^15.6.1",
     "webpack": "^4.5.0"
   },
   "devDependencies": {

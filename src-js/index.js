@@ -2,9 +2,8 @@ window.deps = {
     'react' : require('react'),
     'react-dom' : require('react-dom'),
     'react-dom-server': require('react-dom/server'),
-    'bip39': require('bip39'),
-    'zcoin-lib': require('bitcore-lib-zcoin'),
-    'bitcoinjs': require('bitcoinjs-lib')
+    'bip39': require('bip39')
+    //'zcoin-lib': require('bitcore-lib-zcoin')
 };
 
 window.React = window.deps['react'];
