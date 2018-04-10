@@ -166,6 +166,7 @@
         tx2 (t/add-output tx1 output)
 
         ;; TODO: TODO: Config fee
+        ;; TODO: Where the changed go?
 
         hdpv (k/from-seed (m/to-seed mnemonic password))
         pv (k/derive-key hdpv 0)
@@ -192,6 +193,7 @@
   [:div
    [:h2 "Sign a transaction"]
    [:div
+    [:div.alert.alert-warning "TODO: Auto select input"]
     [:div
      [:h4 "Source/Input"]
      [input-box]]

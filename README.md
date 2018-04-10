@@ -4,16 +4,17 @@ FIXME: Write a one-line description of your library/project.
 
 # Features
 
-- Create wallet - mnemonic
-- Restore wallet - mnemonic, secret wif
-- Send Tx
-- Tx History
+- Create wallet by mnemonic
+- Restore wallet by mnemonic
+- Sign Transaction
+- Send Transaction
+- View transaction history
+
 - Mint/Spend zerocoin
-- Multisign sign
-- offline mode with green bar as indicator
-- Prevent overlay app
-- Prevent screen capture
-- Prevent Screen view in app switcher
+- Multi signature
+
+- Restore wallet by private-key (wif)
+
 
 ## Overview
 

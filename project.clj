@@ -12,6 +12,7 @@
                  [org.clojure/clojurescript "1.9.946"]
                  [org.clojure/core.async  "0.4.474"]
                  [reagent "0.7.0" :exclusions [cljsjs/react cljsjs/react-dom]]
+                 [cljs-http "0.1.45"]
                  [binaryage/oops "0.5.8"]]
 
   :plugins [[lein-figwheel "0.5.15"]
@@ -53,6 +54,8 @@
                 :source-paths ["src"]
                 :compiler {:output-to "resources/public/js/compiled/zcoin_wallet.js"
                            :main zcoin-wallet.core
+                           :foreign-libs [{:file "resources/public/js/bundle.js"
+                                           :provides ["cljsjs.react" "cljsjs.react.dom" "webpack.bundle"]}]
                            :closure-defines {process.env/NODE_ENV "production"}
                            :optimizations :advanced
                            :pretty-print false}}]}

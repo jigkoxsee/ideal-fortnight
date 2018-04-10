@@ -1,8 +1,10 @@
 (ns zcoin-wallet.core
-    (:require [webpack.bundle]
-              [reagent.core :as reagent :refer [atom]]
-              [zcoin-wallet.views.new-mnemonic :as new-mnemonic]
-              [zcoin-wallet.views.sign-tx :as sign-tx]))
+  (:require [webpack.bundle]
+            [reagent.core :as reagent :refer [atom]]
+
+            [zcoin-wallet.views.new-mnemonic :as new-mnemonic]
+            [zcoin-wallet.views.addr-transactions :as addr-transaction]
+            [zcoin-wallet.views.sign-tx :as sign-tx]))
 
 (enable-console-print!)
 
@@ -10,15 +12,21 @@
 
 ;; define your app data so that it doesn't get over-written on reload
 
+(defonce app-state (atom 0))
+
 
 (defn hello-world []
+  (prn :app @app-state)
   [:div.container
    [:h1 "Zcoin Wallet"]
    [new-mnemonic/page]
    [:hr]
-   [sign-tx/page]])
+   [sign-tx/page]
+   [:hr]
+   [addr-transaction/page]])
 
-(defn on-js-reload [])
+(defn on-js-reload []
+  (swap! app-state inc))
   ;; optionally touch your app-state to force rerendering depending on
   ;; your application
   ;; (swap! app-state update-in [:__figwheel_counter] inc)

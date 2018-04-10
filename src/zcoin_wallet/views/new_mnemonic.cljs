@@ -7,7 +7,7 @@
     [zcoin.transaction :as t]
     [zcoin.mnemonic :as m]))
 
-(defonce app-state (atom {:mnemonic "-"}))
+(defonce app-state (atom {:mnemonic ""}))
 
 (defn on-mnemonic-input-change [e]
   (let [val (oget e :target :value)]
