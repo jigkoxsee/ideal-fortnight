@@ -76,8 +76,11 @@
     "Amount"
     [:input.form-control
      {:placeholder "Amount eg. 5000000" ; TODO: convert xzc unit
-      :on-change (input-swap! :amount js/parseInt)
-      :type "number"}]]
+      :on-change (input-swap! :amount (fn [str-amt]
+                                         (-> str-amt
+                                             (js/parseFloat)
+                                             (* 1e8))))
+      :type "text"}]]
    [two-col-form
     "Address"
     [:input.form-control
@@ -103,8 +106,11 @@
     "Amount"
     [:input.form-control
      {:placeholder "Send amount"
-      :on-change (output-swap! :amount js/parseInt)
-      :type "number"}]]])
+      :on-change (output-swap! :amount (fn [str-amt]
+                                         (-> str-amt
+                                             (js/parseFloat)
+                                             (* 1e8))))
+      :type "text"}]]])
 
 (defn signature-box []
  [:form
@@ -184,7 +190,7 @@
   (prn :output @output-atom)
   (prn :sign @signature-atom)
   [:div
-   [:h3 "sign a transaction"]
+   [:h2 "Sign a transaction"]
    [:div
     [:div
      [:h4 "Source/Input"]
@@ -198,13 +204,13 @@
      [:h4 "Signing"]
      [signature-box]]
 
-    [:div
-     [:button.btn.btn-success
+    [:div.text-right
+     [:button.btn.btn-success.btn-gradient
       {:on-click on-sign-clicked}
       "sign"]]
 
     [:div
-      [:h4 "Result"]
+      [:h4 "Signed Result"]
       [result-box result-atom]]]])
 
 
