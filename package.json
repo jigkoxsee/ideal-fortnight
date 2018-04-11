@@ -5,11 +5,10 @@
   "scripts": {
     "watch": "webpack -d --watch",
     "js": "webpack -p",
-    "cljs": "lein figwheel",
-    "rcljs": "rlwrap lein figwheel",
+    "cljs": "rlwrap lein figwheel",
     "start": "yarn js&&yarn cljs",
     "clean": "lein do clean",
-    "build": "lein do clean, cljsbuild once min",
+    "build": "yarn js && lein do clean, cljsbuild once min",
     "deploy": "firebase deploy"
   },
   "dependencies": {

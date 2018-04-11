@@ -1,30 +1,29 @@
 # zcoin-wallet
 
-FIXME: Write a one-line description of your library/project.
+Zcoin wallet on web
 
-# Features
+## Overview
+
+The features we going to implement is listed below
 
 - Create wallet by mnemonic
 - Restore wallet by mnemonic
 - Sign Transaction
 - Send Transaction
 - View transaction history
-
 - Mint/Spend zerocoin
 - Multi signature
-
 - Restore wallet by private-key (wif)
-
-
-## Overview
-
-FIXME: Write a paragraph about the library/project and highlight its goals.
 
 ## Setup
 
+Install npm modules run:
+
+    yarn
+
 To get an interactive development environment run:
 
-    lein figwheel
+    yarn start
 
 and open your browser at [localhost:3449](http://localhost:3449/).
 This will auto compile and send all changes to the browser without the
@@ -37,17 +36,17 @@ and you should see an alert in the browser window.
 
 To clean all compiled files:
 
-    lein clean
+    yarn clean
 
 To create a production build run:
 
-    lein do clean, cljsbuild once min
+    yarn build
 
 And open your browser in `resources/public/index.html`. You will not
 get live reloading, nor a REPL. 
 
 ## License
 
-Copyright © 2014 FIXME
+Copyright © 2014 Supakorn Warodom
 
-Distributed under the Eclipse Public License either version 1.0 or (at your option) any later version.
+Distributed under the Eclipse Public License either version 1.0
