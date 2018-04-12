@@ -179,11 +179,109 @@
       {:is-success  (ocall! tx3 :isFullySigned)
        :txblob      (t/get-raw-tx tx3)})))
 
+
+
+(defn select-input [required-amount unspent-utxos]
+  ;; TODO: select optimize mode
+
+  ; A. Optimize utxo
+  ;; 1. sort by smallest first -> sum until meet
+  ;; 2. if it exact match with unspent tx -> use that tx  ;; TODO: implement this
+
+  ; B. Optimize fees - use least utxo as possible
+  ; C. Use Oldest first
+
+
+  (let [sorted-unspent-utxo (sort-by :amount unspent-utxos)
+        pick
+        (fn [utxos sum unspent-utxos]
+          (if (< sum required-amount)
+            (let [cur          (first unspent-utxos)
+                  cur-amount   (get cur :amount)
+                  need-amount  (- required-amount sum)
+                  use-amount   (min cur-amount need-amount)
+                  use-cur      (assoc cur :amount use-amount)]
+              (recur
+                (conj utxos use-cur)
+                (+ sum      use-amount)
+                (drop 1 unspent-utxos)))
+            ;; Already enough
+            utxos))]
+    (pick [] 0 sorted-unspent-utxo)))
+
+  ;(->> unspent-txs
+  ;     (sort-by :amount)
+  ;     (reduce
+  ;       (fn [{:keys [sum utxos] :as acc} {:keys [amount] :as cur}]
+  ;          (if (< sum required-amount)
+  ;            (let [need-amount  (- required-amount sum)
+  ;                  use-amount   (if (<= amount need-amount)
+  ;                                 amount
+  ;                                 need-amount)
+  ;                  use-cur      (assoc cur :amount use-amount)]
+  ;              (-> acc
+  ;                 (update :sum   #(+ % use-amount))
+  ;                 (update :utxos #(conj % use-cur))))
+  ;
+  ;            ;; Already enough
+  ;            acc))
+  ;      {:sum   0
+  ;       :utxos []})))
+
+(comment
+
+  (let [unspent-txs [{:txid 1 :amount (* 1 1e8)}
+                     {:txid 2 :amount (* 5 1e8)}
+                     {:txid 3 :amount (* 3 1e8)}
+                     {:txid 4 :amount (* 4 1e8)}
+                     {:txid 5 :amount (* 2 1e8)}]]
+     (select-input (* 4 1e8) unspent-txs))
+
+  (let [unspent-txs [{:txid 1 :amount (* 1 1e8)}
+                     {:txid 2 :amount (* 5 1e8)}
+                     {:txid 3 :amount (* 3 1e8)}
+                     {:txid 4 :amount (* 4 1e8)}
+                     {:txid 5 :amount (* 2 1e8)}]
+     ;(select-input (* 4 1e8) unspent-txs)))
+        sorted-unspent-utxos (sort-by :amount unspent-txs)
+        required-amount (* 4 1e8)
+        pick
+              (fn [utxos sum unspent-utxos]
+                (if (< sum required-amount)
+                  (let [cur          (first unspent-utxos)
+                        cur-amount   (get cur :amount)
+                        need-amount  (- required-amount sum)
+                        use-amount   (min cur-amount need-amount)
+                        use-cur      (assoc cur :amount use-amount)]
+                    (recur
+                      (conj utxos use-cur)
+                      (+ sum      use-amount)
+                      (drop 1 unspent-utxos)))
+
+                  ;; Already enough
+                  utxos))]
+    (pick [] 0 sorted-unspent-utxos)))
+
+
+
+
+
+
 (defn on-sign-clicked []
   (prn :signing)
-  (prn :result (sign {:input @input-atom
-                      :output @output-atom
-                      :signature @signature-atom})))
+
+  ;; TODO: Move all this to zcoin.transaction.sign
+  (let [available-amount 500000000
+        required-amount  150000000]
+
+    ;; Check for available amount transaction
+    (if (< available-amount required-amount)
+      (reset! result-atom {:is-success false
+                           :message "Your balance is not enough"})
+      ;; TODO: Build inputs from unspent txs
+      (prn :result (sign {:input @input-atom
+                          :output @output-atom
+                          :signature @signature-atom})))))
 
 
 (defn page []
@@ -217,6 +315,7 @@
 
 
 (comment
+
   "https://explorer.zcoin.io/api/getrawtransaction?txid=b933c0920f62d5ac5b4e8ea6a77507f4f265e320c33855a56315fc718016cffb&decrypt=1"
   (let [tx (new-transaction)
         tx1
